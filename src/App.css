@@ -1,0 +1,35 @@
+.macro-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.progress-circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.progress-inner-circle {
+  width: 80px;
+  height: 80px;
+  background: #000; /* Background of the inner circle */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress-inner-circle span {
+  color: white; /* Text color */
+  font-weight: bold;
+}
+
+.macro-type {
+  margin-top: 10px;
+  color: #fff; /* Adjust as necessary */
+}
