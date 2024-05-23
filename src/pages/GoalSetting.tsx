@@ -100,13 +100,13 @@ export default function GoalSetting() {
   useEffect(() => {
     async function getUserData() {
       try {
-        const result = await axios.get("http://100.28.28.31:3000/user", {
+        const result = await axios.get("http://localhost:3001/user", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
         });
 
-        const goal = await axios.get("http://100.28.28.31:3000/goal", {
+        const goal = await axios.get("http://localhost:3001/goal", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
@@ -146,7 +146,7 @@ export default function GoalSetting() {
   // Submit handlers
   async function handleSubmit() {
     try {
-      const result = await axios.put("http://100.28.28.31:3000/goal", goal, {
+      const result = await axios.put("http://localhost:3001/goal", goal, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },

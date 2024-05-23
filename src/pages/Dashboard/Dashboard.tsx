@@ -50,7 +50,7 @@ export default function Dashboard() {
   useEffect(() => {
     async function getMeals() {
       try {
-        const result = await axios.get("http://100.28.28.31:3000/meal", {
+        const result = await axios.get("http://localhost:3001/meal", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
@@ -117,7 +117,7 @@ export default function Dashboard() {
   useEffect(() => {
     async function getPlans() {
       try {
-        const result = await axios.get("http://100.28.28.31:3000/plan", {
+        const result = await axios.get("http://localhost:3001/plan", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
@@ -137,10 +137,6 @@ export default function Dashboard() {
   // Submit handlers
 
   //JSX
-  if (!meals) {
-    return <div>Loading meals...</div>; // Or render a spinner or any appropriate loading state
-  }
-
   return (
     <div className="flex" style={{ paddingTop: "60px" }}>
       {" "}

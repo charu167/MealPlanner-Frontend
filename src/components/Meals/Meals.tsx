@@ -41,7 +41,7 @@ export default function Meals({ meals, setMeals }: Props) {
   useEffect(() => {
     async function getMeals() {
       try {
-        const result = await axios.get("http://100.28.28.31:3000/meal", {
+        const result = await axios.get("http://localhost:3001/meal", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
@@ -60,7 +60,7 @@ export default function Meals({ meals, setMeals }: Props) {
   // Submit handlers (delete meal)
   async function deleteMeal(mealId: number) {
     try {
-      const result = await axios.delete("http://100.28.28.31:3000/meal", {
+      const result = await axios.delete("http://localhost:3001/meal", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },

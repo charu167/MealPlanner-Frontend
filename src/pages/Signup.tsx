@@ -45,7 +45,7 @@ export default function Signup() {
         date_of_birth: data.date_of_birth + "T00:00:00.000Z",
       };
       const result = await axios.post(
-        "http://100.28.28.31:3000/auth/signup",
+        "http://localhost:3001/auth/signup",
         formattedData
       );
       localStorage.setItem("access_token", result.data.access_token);

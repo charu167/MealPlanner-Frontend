@@ -183,7 +183,7 @@ export default function Meal({ meals = [], setMeals }: Props) {
       const foodName = selectedFood.foodName;
       const quantity = 100; // Default quantity
       const result = await axios.post(
-        "http://100.28.28.31:3000/meal/addSingleFood",
+        "http://localhost:3001/meal/addSingleFood",
         { mealId, foodId, foodName, quantity },
         {
           headers: {
@@ -226,7 +226,7 @@ export default function Meal({ meals = [], setMeals }: Props) {
   async function handleSubmit() {
     try {
       const result = await axios.put(
-        "http://100.28.28.31:3000/meal/updateMealDetails",
+        "http://localhost:3001/meal/updateMealDetails",
         { ...meal },
         {
           headers: {
@@ -260,7 +260,7 @@ export default function Meal({ meals = [], setMeals }: Props) {
   async function handleDeleteFood(foodId: string) {
     try {
       const result = await axios.delete(
-        "http://100.28.28.31:3000/meal/deleteFoodFromMeal",
+        "http://localhost:3001/meal/deleteFoodFromMeal",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,

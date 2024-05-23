@@ -25,7 +25,7 @@ export default function Plans({ plans, setPlans }: Props) {
   // Submit handlers
   async function handleDeletePlan(planId: number) {
     try {
-      const result = await axios.delete("http://100.28.28.31:3000/plan", {
+      const result = await axios.delete("http://localhost:3001/plan", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },

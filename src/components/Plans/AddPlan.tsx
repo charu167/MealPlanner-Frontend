@@ -71,7 +71,7 @@ export default function AddPlan({ setPlans, meals }: Props) {
   async function handleSubmit() {
     try {
       const plan = await axios.post(
-        "http://100.28.28.31:3000/plan",
+        "http://localhost:3001/plan",
         { name: planName },
         {
           headers: {
@@ -92,7 +92,7 @@ export default function AddPlan({ setPlans, meals }: Props) {
         });
 
       const mealCount = await axios.post(
-        "http://100.28.28.31:3000/plan/addMultipleMeals",
+        "http://localhost:3001/plan/addMultipleMeals",
         dataList,
         {
           headers: {

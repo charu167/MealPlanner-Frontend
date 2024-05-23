@@ -75,7 +75,7 @@ export default function AddMeal({ setMeals }: addMealProps) {
   async function handleSubmit() {
     try {
       const result = await axios.post(
-        "http://100.28.28.31:3000/meal",
+        "http://localhost:3001/meal",
         { name: mealName },
         {
           headers: {
@@ -105,7 +105,7 @@ export default function AddMeal({ setMeals }: addMealProps) {
         mealFoods.push({ mealId, foodId, foodName, quantity, macros });
       }
       const result2 = await axios.post(
-        "http://100.28.28.31:3000/meal/addMultipleFoods",
+        "http://localhost:3001/meal/addMultipleFoods",
         mealFoods,
         {
           headers: {

@@ -66,7 +66,7 @@ export default function DropZone({ meals }: { meals: Meal[] }) {
     async function getPlanDetails() {
       try {
         const result = await axios.get(
-          "http://100.28.28.31:3000/plan/getPlanDetails",
+          "http://localhost:3001/plan/getPlanDetails",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -89,7 +89,7 @@ export default function DropZone({ meals }: { meals: Meal[] }) {
 
         setPlanMealList(tempMealList);
 
-        const goal = await axios.get("http://100.28.28.31:3000/goal", {
+        const goal = await axios.get("http://localhost:3001/goal", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
@@ -107,7 +107,7 @@ export default function DropZone({ meals }: { meals: Meal[] }) {
   async function handleDeleteMeal(entryId: number) {
     try {
       const result = await axios.delete(
-        "http://100.28.28.31:3000/plan/deleteMealFromPlan",
+        "http://localhost:3001/plan/deleteMealFromPlan",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -132,7 +132,7 @@ export default function DropZone({ meals }: { meals: Meal[] }) {
       const mealId = meal.id;
       const mealName = meal.name;
       const result = await axios.post(
-        "http://100.28.28.31:3000/plan/addSingleMEal",
+        "http://localhost:3001/plan/addSingleMEal",
         { mealId, planId, mealName },
         {
           headers: {
