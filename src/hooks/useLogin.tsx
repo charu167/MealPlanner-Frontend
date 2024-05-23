@@ -43,7 +43,7 @@ export default function useLogin() {
 
   async function refreshAccessToken(refresh_token: string) {
     try {
-      const result = await axios.post("http://localhost:3001/refresh-token", {
+      const result = await axios.post("http://100.28.28.31:3001/refresh-token", {
         refresh_token,
       });
       const access_token = result.data.access_token;

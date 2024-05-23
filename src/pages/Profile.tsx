@@ -23,7 +23,7 @@ export default function Profile() {
   useEffect(() => {
     async function getUserData() {
       try {
-        const result = await axios.get("http://localhost:3001/user", {
+        const result = await axios.get("http://100.28.28.31:3001/user", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
@@ -50,7 +50,7 @@ export default function Profile() {
   async function handleSave() {
     if (user) {
       try {
-        await axios.put("http://localhost:3001/user", user, {
+        await axios.put("http://100.28.28.31:3001/user", user, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },

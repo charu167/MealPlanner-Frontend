@@ -50,7 +50,7 @@ export default function Dashboard() {
   useEffect(() => {
     async function getMeals() {
       try {
-        const result = await axios.get("http://localhost:3001/meal", {
+        const result = await axios.get("http://100.28.28.31:3001/meal", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
@@ -117,7 +117,7 @@ export default function Dashboard() {
   useEffect(() => {
     async function getPlans() {
       try {
-        const result = await axios.get("http://localhost:3001/plan", {
+        const result = await axios.get("http://100.28.28.31:3001/plan", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
