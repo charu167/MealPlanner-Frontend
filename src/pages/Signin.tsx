@@ -24,7 +24,7 @@ export default function Signin() {
     event.preventDefault(); // Prevent default form submission behavior
     try {
       const result = await axios.post(
-        "http://localhost:3001/auth/signin",
+        "http://100.28.28.31:3001/auth/signin",
         data
       );
       localStorage.setItem("access_token", result.data.access_token);
