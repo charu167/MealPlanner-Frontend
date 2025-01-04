@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { GlobalPlansContextProvider } from "@/context/globalPlanContext";
+import { ColumnMealContextProvider } from "@/context/columnMealContext";
+import { TotalMacrosProvider } from "@/context/TotalMacrosContext";
+import { PlanProvider } from "@/context/PlanContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,9 +29,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
       >
-        {children}
+        <GlobalPlansContextProvider>
+          <TotalMacrosProvider>
+            <PlanProvider>
+              <ColumnMealContextProvider>{children}</ColumnMealContextProvider>
+            </PlanProvider>
+          </TotalMacrosProvider>
+        </GlobalPlansContextProvider>
       </body>
     </html>
   );
