@@ -188,7 +188,7 @@ export default function DropZone() {
 
   useEffect(() => {
     getData(); // Fetch data when the globalPlan changes.
-  }, [globalPlan, getData]);
+  }, [globalPlan]);
 
   // =========================
   // SUBMIT HANDLERS
