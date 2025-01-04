@@ -121,8 +121,8 @@ export default function DropZone() {
                   postData,
                   {
                     params: {
-                      app_id: "bd2e245b", // Your Edamam App ID.
-                      app_key: "599af1ee3ee5ec07d0da5fff273156b1", // Your Edamam App Key.
+                      app_id: process.env.NEXT_PUBLIC_EDAMAM_APP_ID, // Your Edamam App ID.
+                      app_key: process.env.NEXT_PUBLIC_EDAMAM_APP_KEY, // Your Edamam App Key.
                     },
                     headers: {
                       "Content-Type": "application/json",

@@ -52,9 +52,6 @@ export const PlanProvider: React.FC<{ children: React.ReactNode }> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const EDAMAM_APP_ID = "bd2e245b"; // Replace with your actual App ID
-  const EDAMAM_APP_KEY = "599af1ee3ee5ec07d0da5fff273156b1"; // Replace with your actual App Key
-
   /**
    * Fetches macros for a single food item using the Edamam API.
    * @param foodId - The ID of the food item.
@@ -84,8 +81,8 @@ export const PlanProvider: React.FC<{ children: React.ReactNode }> = ({
         postData,
         {
           params: {
-            app_id: EDAMAM_APP_ID,
-            app_key: EDAMAM_APP_KEY,
+            app_id: process.env.NEXT_PUBLIC_EDAMAM_APP_ID, // Your Edamam App ID.
+            app_key: process.env.NEXT_PUBLIC_EDAMAM_APP_KEY, // Your Edamam App Key.
           },
           headers: {
             "Content-Type": "application/json",

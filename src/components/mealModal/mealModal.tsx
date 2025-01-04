@@ -81,8 +81,8 @@ export default function MealModal({
               postData,
               {
                 params: {
-                  app_id: "488fed6e", // Your Edamam App ID
-                  app_key: "573f1847311da0afb5612b081ed75f73", // Your Edamam App Key
+                  app_id: process.env.NEXT_PUBLIC_EDAMAM_APP_ID, // Your Edamam App ID.
+                  app_key: process.env.NEXT_PUBLIC_EDAMAM_APP_KEY, // Your Edamam App Key.
                 },
                 headers: {
                   "Content-Type": "application/json",
@@ -147,8 +147,8 @@ export default function MealModal({
         "https://api.edamam.com/api/food-database/v2/parser",
         {
           params: {
-            app_id: "225503b7",
-            app_key: "1a3335dc20c618bdf213441cce8aeadb",
+            app_id: process.env.NEXT_PUBLIC_EDAMAM_APP_ID, // Your Edamam App ID.
+            app_key: process.env.NEXT_PUBLIC_EDAMAM_APP_KEY, // Your Edamam App Key.
             ingr: searchInput,
           },
         }
