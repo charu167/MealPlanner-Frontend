@@ -276,7 +276,12 @@ export default function DropZone() {
       {/* List of Meals */}
       <ul className="space-y-4">
         {plan?.PlanMeals.map((planMeal) => (
-          <MealItem setPlan={setPlan} key={planMeal.id} meal={planMeal} />
+          <MealItem
+            setPlan={setPlan}
+            plan={plan}
+            key={planMeal.id}
+            meal={planMeal}
+          />
         ))}
       </ul>
     </div>
