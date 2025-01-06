@@ -91,7 +91,6 @@ export default function MealItem({ meal, plan, setPlan }: MealItemProps) {
       const res = await axios.put(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/plan/${plan.id}`,
         {
-          name: plan.name,
           planMeal: {
             id: meal.id,
             planMealFoodsToCreate: [
@@ -141,8 +140,6 @@ export default function MealItem({ meal, plan, setPlan }: MealItemProps) {
       setSearchSuggestions([]);
     }
   }
-
-  console.log(plan);
 
   async function handleSearchChange(
     event: React.ChangeEvent<HTMLInputElement>
@@ -194,7 +191,6 @@ export default function MealItem({ meal, plan, setPlan }: MealItemProps) {
     await axios.put(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/plan/${plan.id}`,
       {
-        name: "",
         planMeal: {
           id: meal.id,
           planMealFoodsToUpdate: meal.PlanMealFoods.map((planMealFood) => ({
@@ -209,9 +205,6 @@ export default function MealItem({ meal, plan, setPlan }: MealItemProps) {
         },
       }
     );
-
-    // Optionally, you can handle success messages or local UI feedback
-    console.log("Meal updated successfully!");
   }
 
   async function handleRemoveMeal() {
@@ -241,7 +234,6 @@ export default function MealItem({ meal, plan, setPlan }: MealItemProps) {
     await axios.put(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/plan/${plan.id}`,
       {
-        name: "",
         planMeal: {
           id: meal.id,
           planMealFoodsToDelete: [{ id: foodId }],
