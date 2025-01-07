@@ -253,54 +253,47 @@ export default function MacroCalculator() {
   // =========================
 
   // Conditional rendering based on loading and error states
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading)
+    return (
+      <p className="bg-black text-white text-center my-auto">Loading...</p>
+    );
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="flex flex-col min-h-screen justify-center items-center bg-gray-100 p-6">
-      {/* Current Goal */}
-      <CurrentGoal goal={goal} />
-
+    <div className="flex flex-col min-h-screen justify-center items-center bg-black p-6">
       {/* Goal Setting Start */}
-      <div className="w-full max-w-4xl bg-gray-50 rounded-lg shadow-md p-6">
-        {/* Title */}
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
-          Goal Setting
-        </h1>
+      <div className="w-full max-w-4xl rounded-lg shadow-md p-6">
+        {/* Current Goal */}
+        <CurrentGoal goal={goal} />
 
         {/* All inputs are here */}
         {user && (
           <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
             <div className="space-y-4">
               {/* BMR Display */}
-              <div className="mx-8 my-5 p-5 shadow-xl bg-gray-50 rounded-xl">
-                <h2 className="text-xl font-bold text-gray-900 mb-3">
+              <details className="mx-8 my-5 p-5 shadow-xl bg-gradient-to-br text-neutral-200 rounded-xl from-neutral-900 to-blackrounded-xl">
+                <summary className="text-xl font-medium mb-3">
                   Metabolic Info
-                </h2>
-                <p className="text-base text-gray-700">
-                  Basal Metabolic Rate (BMR):
-                  <span className="font-semibold text-gray-700">
-                    {bmr.toFixed(2)} kcal
-                  </span>
+                </summary>
+
+                <p className="text-base">
+                  BMR:{" "}
+                  <span className="font-semibold text-xl">{bmr.toFixed(0)} kcal</span>
                 </p>
-              </div>
+              </details>
 
               {/* Current and Target Weight */}
-              <div className="mx-8 my-5 p-5 shadow-xl bg-gray-50 rounded-xl">
-                <h2 className="text-xl font-bold text-gray-900 mb-3">
+              <details className="mx-8 my-5 p-5 shadow-xl bg-gradient-to-br text-neutral-200 rounded-xl from-neutral-900 to-blackrounded-xl">
+                <summary className="text-xl font-bold  mb-3">
                   Weight Management
-                </h2>
+                </summary>
                 <div className="flex justify-between items-center">
-                  <p className="text-base text-gray-700">
+                  <p className="text-base ">
                     Current Weight:
-                    <span className="font-semibold text-gray-700">
-                      {user.weight} kg
-                    </span>
+                    <span className="font-semibold ">{user.weight} kg</span>
                   </p>
                   <label className="flex items-center">
-                    <span className="text-gray-700 mr-2">
-                      Target weight (kg):
-                    </span>
+                    <span className=" mr-2">Target weight (kg):</span>
                     <input
                       type="number"
                       placeholder="Enter target weight"
@@ -311,46 +304,40 @@ export default function MacroCalculator() {
                           target_weight: Number(e.target.value),
                         }))
                       }
-                      className="p-2 w-40 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                      className="p-2 w-40 border border-gray-300 bg-black rounded focus:outline-none focus:ring-2 focus:ring-indigo-600"
                     />
                   </label>
                 </div>
-              </div>
-
-              {/* Activity Level */}
-              <div className="mx-8 my-5 p-5 shadow-xl bg-gray-50 rounded-xl">
-                <h2 className="text-xl font-bold text-gray-900 mb-3">
-                  Activity Level
-                </h2>
-                <select
-                  className="mt-2 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={goal.activity_level}
-                  onChange={handleActivityLevelChange}
-                >
-                  <option value="1.2">Sedentary: little or no exercise</option>
-                  <option value="1.375">Exercise 1-3 times/week</option>
-                  <option value="1.55">Exercise 4-5 times/week</option>
-                  <option value="1.725">
-                    Daily or intense exercise 3-4 times/week
-                  </option>
-                  <option value="1.9">Intense exercise 6-7 times/week</option>
-                  <option value="2.0">
-                    Very intense exercise daily, or physical job
-                  </option>
-                </select>
-              </div>
-
-              {/* Surplus/Deficit Adjustment */}
-              <div className="mx-8 my-5 p-5 shadow-xl bg-gray-50 rounded-xl">
-                <h2 className="text-xl font-bold text-gray-900 mb-3">
-                  Dietary Adjustment
-                </h2>
-                <label
-                  htmlFor="caloricAdjustment"
-                  className="block text-gray-700 text-base"
-                >
-                  Caloric Adjustment (kcal/day):
+                {/* Activity Level */}
+                <label>
+                  <span className=" mr-2">Activity level:</span>
+                  <select
+                    className="mt-2 p-2 w-full border  bg-black border-b-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={goal.activity_level}
+                    onChange={handleActivityLevelChange}
+                  >
+                    <option value="1.2">
+                      Sedentary: little or no exercise
+                    </option>
+                    <option value="1.375">Exercise 1-3 times/week</option>
+                    <option value="1.55">Exercise 4-5 times/week</option>
+                    <option value="1.725">
+                      Daily or intense exercise 3-4 times/week
+                    </option>
+                    <option value="1.9">Intense exercise 6-7 times/week</option>
+                    <option value="2.0">
+                      Very intense exercise daily, or physical job
+                    </option>
+                  </select>
                 </label>
+              </details>
+
+              {/* Caloric Adjustment */}
+              <details className="mx-8 my-5 p-5 shadow-xl bg-gradient-to-br text-neutral-200 rounded-xl from-neutral-900 to-blackrounded-xl">
+                <summary className="text-xl font-bold mb-3">
+                  Caloric Adjustment
+                </summary>
+
                 <input
                   id="caloricAdjustment"
                   type="range"
@@ -377,23 +364,17 @@ export default function MacroCalculator() {
                           })`, // More positive, more intense green
                   }}
                 />
-                <p className="text-center font-semibold text-gray-700">
+                <p className="text-center font-semibold ">
                   {goal.caloric_adjustment} kcal/day
                 </p>
 
-                <p className="text-base text-gray-700">
+                <p className="text-base ">
                   Adjusted Total Daily Energy Expenditure:{" "}
                   <span className="font-bold">
                     {adjustedTDEE.toFixed(2)} kcal
                   </span>
                 </p>
-              </div>
-
-              {/* Estimated Time of Arrival (ETA) */}
-              <div className="mx-8 my-5 p-5 shadow-xl bg-gray-50 rounded-xl">
-                <h2 className="text-xl font-bold text-gray-900 mb-3">ETA</h2>
-
-                <p className="text-base text-gray-700">
+                <p className="text-base ">
                   Weekly Weight Change:
                   <span
                     className="font-bold"
@@ -407,17 +388,17 @@ export default function MacroCalculator() {
                     {weeklyWeightChangeKg.toFixed(2)} kg
                   </span>
                 </p>
-                <p className="text-base text-gray-700">
+                <p className="text-base ">
                   Time to Reach Target:
                   <span className="font-bold">{displayWeeksToTarget}</span>
                 </p>
-              </div>
+              </details>
 
               {/* Macronutrients */}
-              <div className="mx-8 my-5 p-5 shadow-xl bg-gray-50 rounded-xl">
-                <h2 className="text-xl font-bold text-gray-900 mb-3">
+              <details className="mx-8 my-5 p-5 shadow-xl bg-gradient-to-br text-neutral-200 rounded-xl from-neutral-900 to-blackrounded-xl">
+                <summary className="text-xl font-bold mb-3">
                   Macronutrients
-                </h2>
+                </summary>
                 <div className="space-y-4">
                   {/* Protein Input */}
                   <label className="block text-gray-700 text-base">
@@ -476,7 +457,7 @@ export default function MacroCalculator() {
                     </span>
                   </h2>
                 </div>
-              </div>
+              </details>
 
               {/* Submit Button */}
               <div className="col-span-2 text-center mt-6">
