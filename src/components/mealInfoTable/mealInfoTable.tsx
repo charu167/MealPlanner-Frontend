@@ -43,9 +43,9 @@ export default function MealInfoTable() {
   // =========================
 
   return (
-    <div className="relative overflow-x-auto">
+    <div className="relative overflow-x-auto rounded-lg">
       {/* Meal Information Table */}
-      <table className="w-full text-sm text-left border border-gray-200 text-neutral-600 rtl:text-right">
+      <table className="w-full text-sm text-left border border-gray-200 text-neutral-600 rtl:text-right rounded-lg">
         {/* Table Header */}
         <thead className="text-xs font-medium text-neutral-600 uppercase bg-gray-100">
           <tr>
@@ -251,7 +251,7 @@ function TableRow({ food }: TableRowProps) {
         ) : (
           <IconPencil
             onClick={() => setEdit(true)}
-            className="text-blue-600 cursor-pointer"
+            className="text-neutral-500 cursor-pointer"
             size={20}
           />
         )}

@@ -58,7 +58,7 @@ export default function MealsColumn() {
     <div
       className={cn(
         "col-span-2 rounded-md flex flex-col md:flex-row bg-gray-50  w-full flex-1 max-w-7xl mx-auto border border-gray-300 overflow-hidden",
-        "h-screen"
+        "h-full"
       )}
     >
       <Sidebar>
@@ -89,7 +89,12 @@ export default function MealsColumn() {
           </div>
 
           {/* The Modal */}
-          <MealModal open={open} setOpen={setOpen} selectedMeal={currMeal} />
+          <MealModal
+            open={open}
+            setOpen={setOpen}
+            selectedMeal={currMeal}
+            setCurrMeal={setCurrMeal}
+          />
         </SidebarBody>
       </Sidebar>
     </div>

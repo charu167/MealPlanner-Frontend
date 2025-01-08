@@ -121,10 +121,10 @@ export default function SignupForm() {
   return (
     <div className="max-w-md w-full mx-auto my-4 rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-black border border-white/[0.2] ">
       {/* Welcome Message */}
-      <h2 className="font-bold text-xl text-neutral-200">
+      <h2 className="text-center font-bold text-xl text-neutral-200">
         Welcome to NutriCraft
       </h2>
-      <p className="text-sm max-w-sm mt-2 text-neutral-300">Please Signup</p>
+      <p className="text-center text-sm max-w-sm mt-2 text-neutral-300">Please Signup</p>
 
       {/* Signup Form */}
       <form className="my-8">
@@ -199,7 +199,7 @@ export default function SignupForm() {
 
         {/* Date of Birth Input */}
         <LabelInputContainer className="mb-8">
-          <Label htmlFor="age">Age</Label>
+          <Label htmlFor="age">Date Of Birth</Label>
           <Input
             type="date"
             onChange={handleChange}

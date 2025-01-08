@@ -1,6 +1,9 @@
 import {
   IconArrowBigDownFilled,
   IconArrowBigUpFilled,
+  IconBolt,
+  IconDna,
+  IconDroplet,
   IconRun,
   IconScaleOutline,
 } from "@tabler/icons-react";
@@ -87,23 +90,36 @@ export default function CurrentGoal({ goal }: { goal: Goal }) {
           Nutrients
         </h1> */}
         <div className="grid grid-cols-3 gap-3 max-w-full font-sans text-neutral-400 mt-4">
-          <div className="w-36 border border-white/[0.2] px-8 py-4 flex flex-col items-center rounded-lg">
+          <div className="w-36 border border-white/[0.2] px-8 py-4 flex flex-col space-y-2 items-center rounded-lg">
             <span className="text-neutral-200 font-semibold">
               {goal.protein.toFixed(2)}
             </span>
-            <span>Protein </span>
+            <div className="flex items-center space-x-2">
+              <IconDna />
+              <span>Protein</span>
+            </div>
           </div>
-          <div className="w-36 border border-white/[0.2] px-8 py-4 flex flex-col items-center rounded-lg">
+
+          <div className="w-36 border border-white/[0.2] px-8 py-4 flex flex-col space-y-2 items-center rounded-lg">
             <span className="text-neutral-200 font-semibold">
               {goal.fats.toFixed(2)}
             </span>
-            <span>Fats</span>
+            <div className="flex items-center space-x-2">
+              <IconDroplet />{" "}
+              {/* Replace with your preferred fats-related icon */}
+              <span>Fats</span>
+            </div>
           </div>
-          <div className="w-36 border border-white/[0.2] px-8 py-4 flex flex-col items-center rounded-lg">
+
+          <div className="w-36 border border-white/[0.2] px-8 py-4 flex flex-col space-y-2 items-center rounded-lg">
             <span className="text-neutral-200 font-semibold">
               {goal.carbs.toFixed(2)}
             </span>
-            <span>Carbs </span>
+            <div className="flex items-center space-x-2">
+              <IconBolt />{" "}
+              {/* Replace with your preferred carbs-related icon */}
+              <span>Carbs</span>
+            </div>
           </div>
         </div>
       </div>

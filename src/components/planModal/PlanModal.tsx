@@ -223,7 +223,9 @@ export default function PlanModal({
                   onClick={
                     currPlan !== undefined ? handleUpdatePlan : handleCreatePlan
                   }
-                  className="w-28 px-4 py-2 rounded-md border border-blue-500 bg-blue-100 text-blue-700 text-sm font-medium hover:bg-blue-200 hover:-translate-y-1 transform transition duration-200 hover:shadow-md"
+                  disabled={saveLoading}
+                  className={`bg-gradient-to-br w-36 relative group/btn from-zinc-900 to-zinc-900 bg-zinc-800 text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]
+                    ${saveLoading ? "opacity-50 cursor-not-allowed" : ""}`}
                 >
                   {saveLoading ? "Saving..." : "Save"}
                 </button>
@@ -231,7 +233,13 @@ export default function PlanModal({
                 {currPlan !== undefined ? (
                   <button
                     onClick={handleDeletePlan}
-                    className="w-28 px-4 py-2 rounded-md border border-red-500 bg-red-100 text-red-700 text-sm font-medium hover:bg-red-200 hover:-translate-y-1 transform transition duration-200 hover:shadow-md"
+                    disabled={deleteLoading}
+                    className={`bg-gradient-to-br w-36 relative group/btn from-zinc-900 to-zinc-900 bg-zinc-800 text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]
+                             ${
+                               deleteLoading
+                                 ? "opacity-50 cursor-not-allowed"
+                                 : ""
+                             }`}
                   >
                     {deleteLoading ? "Deleting..." : "Delete"}
                   </button>

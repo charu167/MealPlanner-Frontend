@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input"; // Custom Input component
 import { cn } from "@/lib/utils"; // Utility function for conditional class names
 import { useRouter } from "next/navigation"; // Next.js router for navigation
 import axios from "axios"; // Axios for making HTTP requests
-import Link from "next/link";
 import useLogin from "@/hooks/useLogin"; // Custom hook to ensure user is logged in
 
 // =========================
@@ -21,7 +20,8 @@ interface User {
   gender: string;
   height: number;
   id: number;
-  username: string;
+  firstname: string;
+  lastname: string;
   weight: number;
 }
 
@@ -50,6 +50,7 @@ export default function Profile() {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
   const [error, setError] = useState<string>(""); // Error state
+  const [saving, setSaving] = useState(false);
 
   const router = useRouter(); // Initialize Next.js router for navigation.
 
@@ -113,16 +114,19 @@ export default function Profile() {
   async function handleSave() {
     if (user) {
       try {
+        setSaving(true);
         await axios.put(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user`, user, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
         });
-        alert("Profile updated successfully!");
+
         router.push("/dashboard"); // Navigate to the dashboard after successful update
       } catch (error) {
         console.error(error);
         alert("Failed to update profile");
+      } finally {
+        setSaving(false);
       }
     }
   }
@@ -136,8 +140,8 @@ export default function Profile() {
 
   if (isLoading)
     return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="text-gray-500">Loading...</p>
+      <div className="flex bg-black justify-center items-center h-screen">
+        <p className="text-neutral-200 text-xl font-bold">Loading...</p>
       </div>
     );
 
@@ -153,26 +157,40 @@ export default function Profile() {
   // =========================
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
+    <div className="flex flex-col justify-center bg-black items-center h-screen">
       {/* Profile Form Container */}
-      <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 my-auto shadow-input bg-black border border-white/[0.2]">
+      <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 my-auto shadow-input bg-gradient-to-br from-neutral-900 to-black border border-white/[0.2]">
         {/* Profile Title */}
-        <h2 className="font-bold text-xl text-neutral-200">Your Profile</h2>
-        <p className="text-sm max-w-sm mt-2 text-neutral-300">
+        <h2 className="font-bold text-xl text-center text-neutral-200">
+          Your Profile
+        </h2>
+        <p className="text-sm text-center max-w-sm mt-2 text-neutral-300">
           Update your personal information
         </p>
 
         {/* Profile Form */}
         <form className="my-8">
-          {/* Username Input */}
+          {/* Firstname Input */}
           <LabelInputContainer className="mb-4">
-            <Label htmlFor="username">Username</Label>
+            <Label htmlFor="username">Firstname</Label>
             <Input
               onChange={handleChange}
               name="username"
               placeholder="Your Username"
               type="text"
-              value={user?.username || ""}
+              value={user?.firstname || ""}
+            />
+          </LabelInputContainer>
+
+          {/* Lastname Input */}
+          <LabelInputContainer className="mb-4">
+            <Label htmlFor="username">Lastname</Label>
+            <Input
+              onChange={handleChange}
+              name="username"
+              placeholder="Your Username"
+              type="text"
+              value={user?.lastname || ""}
             />
           </LabelInputContainer>
 
@@ -193,37 +211,11 @@ export default function Profile() {
             <Label htmlFor="weight">Weight (in kg)</Label>
             <Input
               onChange={handleChange}
+              className=""
               name="weight"
               placeholder="e.g., 65"
               type="number"
               value={user?.weight || ""}
-            />
-          </LabelInputContainer>
-
-          {/* Gender Select */}
-          <LabelInputContainer className="mb-4">
-            <Label htmlFor="gender">Gender</Label>
-            <select
-              name="gender"
-              value={user?.gender || ""}
-              onChange={handleChange}
-              className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out text-center text-sm"
-            >
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-          </LabelInputContainer>
-
-          {/* Date of Birth Input */}
-          <LabelInputContainer className="mb-4">
-            <Label htmlFor="date_of_birth">Date of Birth</Label>
-            <Input
-              onChange={handleChange}
-              name="date_of_birth"
-              type="date"
-              value={user?.date_of_birth || ""}
             />
           </LabelInputContainer>
 
@@ -234,18 +226,11 @@ export default function Profile() {
           <button
             type="button"
             onClick={handleSave}
-            className="bg-gradient-to-br relative group/btn from-zinc-900 to-zinc-900 bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] hover:from-zinc-700 hover:to-zinc-700 transition duration-200 ease-in-out"
+            className="bg-gradient-to-br relative group/btn from-zinc-900 to-zinc-900 bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] hover:from-zinc-900 hover:to-zinc-900 transition duration-200 ease-in-out"
           >
-            Save Changes &rarr;
+            {saving ? <span>Saving...</span> : <span>Save Changes &rarr;</span>}
             <BottomGradient /> {/* Decorative gradient effect */}
           </button>
-
-          {/* Navigation Link to Dashboard */}
-          <div className="text-center mt-4">
-            <Link href="/dashboard" className="text-blue-600 hover:underline">
-              Back to Dashboard
-            </Link>
-          </div>
         </form>
       </div>
     </div>

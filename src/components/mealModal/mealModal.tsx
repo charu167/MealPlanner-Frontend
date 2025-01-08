@@ -12,12 +12,14 @@ interface MealModalProps {
   open: boolean;
   setOpen: React.Dispatch<SetStateAction<boolean>>;
   selectedMeal: Meal | undefined;
+  setCurrMeal: React.Dispatch<SetStateAction<Meal | undefined>>;
 }
 
 export default function MealModal({
   open,
   setOpen,
   selectedMeal,
+  setCurrMeal,
 }: MealModalProps) {
   // Context
   const { meal, setMeal } = useContext(ColumnMealContext);
@@ -126,6 +128,7 @@ export default function MealModal({
   function handleModalClose() {
     setMeal(undefined);
     setSearchSuggestions([]);
+    setCurrMeal(undefined);
     setOpen(false);
   }
 
@@ -364,10 +367,7 @@ export default function MealModal({
                 <button
                   onClick={handleSave}
                   disabled={saveLoading} // Optionally disable while saving
-                  className={`w-28 px-4 py-2 rounded-md border border-blue-500 
-                             bg-blue-100 text-blue-700 text-sm font-medium
-                             hover:bg-blue-200 hover:-translate-y-1 transform
-                             transition duration-200 hover:shadow-md
+                  className={`bg-gradient-to-br w-36 relative group/btn from-zinc-900 to-zinc-900 bg-zinc-800 text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]
                              ${
                                saveLoading
                                  ? "opacity-50 cursor-not-allowed"
@@ -376,21 +376,20 @@ export default function MealModal({
                 >
                   {saveLoading ? "Saving..." : "Save"}
                 </button>
-                <button
-                  onClick={handleDelete}
-                  disabled={deleteLoading}
-                  className={`w-28 px-4 py-2 rounded-md border border-red-500 
-                             bg-red-100 text-red-700 text-sm font-medium
-                             hover:bg-red-200 hover:-translate-y-1 transform
-                             transition duration-200 hover:shadow-md
+                {selectedMeal ? (
+                  <button
+                    onClick={handleDelete}
+                    disabled={deleteLoading}
+                    className={`bg-gradient-to-br w-36 relative group/btn from-zinc-900 to-zinc-900 bg-zinc-800 text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]
                              ${
-                               saveLoading
+                               deleteLoading
                                  ? "opacity-50 cursor-not-allowed"
                                  : ""
                              }`}
-                >
-                  {deleteLoading ? "Deleting..." : "Delete"}
-                </button>
+                  >
+                    {deleteLoading ? "Deleting..." : "Delete"}
+                  </button>
+                ) : null}
               </div>
             </div>
             {/* /CONTENT */}

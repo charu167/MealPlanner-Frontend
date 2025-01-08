@@ -28,7 +28,7 @@ const items = [
     description:
       "Effortlessly calculate your BMR and personalized macros to align with your fitness goals.",
     header: (
-      <div className="flex items-center justify-center w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-red-900 to-black">
+      <div className="flex items-center justify-center w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-black">
         <h1 className="text-white text-3xl font-bold italic">
           Calculate Your Macros
         </h1>
@@ -41,7 +41,7 @@ const items = [
     description:
       "Plan meals for the week with ease using drag-and-drop functionality and custom templates.",
     header: (
-      <div className="flex items-center justify-center w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-gray-900 to-black">
+      <div className="flex items-center justify-center w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-black">
         <h1 className="text-white text-3xl font-bold italic">
           Build Your Weekly Menu
         </h1>

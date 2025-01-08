@@ -43,11 +43,14 @@ export default function MacroDisplay() {
    */
   async function getGoal() {
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/goal`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`, // Authorization header with JWT token.
-        },
-      });
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/goal`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`, // Authorization header with JWT token.
+          },
+        }
+      );
 
       const data = res.data as Goal; // Casting response data to Goal interface.
       setGoal(data); // Updating the goal state with fetched data.
@@ -72,7 +75,7 @@ export default function MacroDisplay() {
         <span>
           <IconTopologyStar3 size={32} /> {/* Displaying an icon */}
         </span>
-        <h1 className="text-4xl font-bold text-black">Macros</h1>{" "}
+        <h1 className="text-4xl font-bold text-neutral-900">Macros</h1>{" "}
         {/* Component title */}
       </div>
 
@@ -80,12 +83,12 @@ export default function MacroDisplay() {
       <div className="flex space-x-8">
         {/* Protein */}
         <div className="flex flex-col items-center">
-          <div className="border-blue-300 border-4 rounded-full px-2 py-10 flex items-center justify-center">
-            <span className="text-xl font-semibold text-blue-600">
+          <div className="border-neutral-400 border-4 rounded-full w-20 h-20 flex flex-col items-center justify-center">
+            <span className="text-xl font-semibold text-neutral-800">
               {(totalMacros.protein / 100).toFixed(0)}
-              <span className="text-xs text-neutral-600">
-                / {goal.protein.toFixed(0)}g
-              </span>
+            </span>
+            <span className="text-xs text-neutral-600">
+              / {goal.protein.toFixed(0)}g
             </span>
           </div>
           <span className="text-sm text-neutral-600 mt-2">Protein</span>{" "}
@@ -94,12 +97,12 @@ export default function MacroDisplay() {
 
         {/* Fats */}
         <div className="flex flex-col items-center">
-          <div className="border-4 border-red-300 rounded-full px-2 py-10 flex items-center justify-center">
-            <span className="text-xl font-semibold text-red-600">
+          <div className="border-neutral-400 border-4 rounded-full w-20 h-20 flex flex-col items-center justify-center">
+            <span className="text-xl font-semibold text-neutral-800">
               {(totalMacros.fats / 100).toFixed(0)}
-              <span className="text-xs text-neutral-600">
-                / {goal.fats.toFixed(0)}g
-              </span>
+            </span>
+            <span className="text-xs text-neutral-600">
+              / {goal.fats.toFixed(0)}g
             </span>
           </div>
           <span className="text-sm text-neutral-600 mt-2">Fats</span>{" "}
@@ -108,12 +111,12 @@ export default function MacroDisplay() {
 
         {/* Carbs */}
         <div className="flex flex-col items-center">
-          <div className="border-4 border-green-300 rounded-full px-2 py-10 flex items-center justify-center">
-            <span className="text-xl font-semibold text-green-600">
+          <div className="border-neutral-400 border-4 rounded-full w-20 h-20 flex flex-col items-center justify-center">
+            <span className="text-xl font-semibold text-neutral-800">
               {(totalMacros.carbs / 100).toFixed(0)}
-              <span className="text-xs text-neutral-600">
-                / {goal.carbs.toFixed(0)}g
-              </span>
+            </span>
+            <span className="text-xs text-neutral-600">
+              / {goal.carbs.toFixed(0)}g
             </span>
           </div>
           <span className="text-sm text-neutral-600 mt-2">Carbs</span>{" "}

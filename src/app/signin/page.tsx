@@ -101,10 +101,10 @@ export default function SigninForm() {
       {/* Signup Form Container */}
       <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 my-auto shadow-input bg-black border border-white/[0.2] ">
         {/* Welcome Message */}
-        <h2 className="font-bold text-xl text-neutral-200">
+        <h2 className="text-center font-bold text-xl text-neutral-200">
           Welcome to NutriCraft
         </h2>
-        <p className="text-sm max-w-sm mt-2 text-neutral-300">Please Login</p>
+        <p className="text-center text-sm max-w-sm mt-2 text-neutral-300">Please Login</p>
 
         {/* Signup Form */}
         <form className="my-8">

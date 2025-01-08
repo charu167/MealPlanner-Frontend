@@ -125,7 +125,7 @@ export default function PlansColumn() {
     <div
       className={cn(
         "shadow-lg col-span-2 rounded-md flex flex-col md:flex-row bg-black w-full flex-1 mx-auto border border-neutral-200 overflow-hidden",
-        "h-screen"
+        "h-full min-h-screen"
       )}
     >
       {/* Sidebar Container */}

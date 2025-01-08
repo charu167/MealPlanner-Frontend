@@ -51,6 +51,7 @@ export default function MealItem({ meal, plan, setPlan }: MealItemProps) {
 
   const [isTableVisible, setIsTableVisible] = useState<boolean>(false);
   const [searchSuggestions, setSearchSuggestions] = useState<any[]>([]);
+  const [saving, setSaving] = useState(false);
 
   // =========================
   // MACRO CALCULATIONS
@@ -187,24 +188,40 @@ export default function MealItem({ meal, plan, setPlan }: MealItemProps) {
   }
 
   async function handleSave() {
-    // Example request body that updates multiple PlanMealFoods
-    await axios.put(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/plan/${plan.id}`,
-      {
-        planMeal: {
-          id: meal.id,
-          planMealFoodsToUpdate: meal.PlanMealFoods.map((planMealFood) => ({
-            id: planMealFood.id,
-            quantity: planMealFood.quantity,
-          })),
+    try {
+      setSaving(true);
+
+      // Make the PUT request to update the plan
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/plan/${plan.id}`,
+        {
+          planMeal: {
+            id: meal.id,
+            planMealFoodsToUpdate: meal.PlanMealFoods.map((planMealFood) => ({
+              id: planMealFood.id,
+              quantity: planMealFood.quantity,
+            })),
+          },
         },
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      }
-    );
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        }
+      );
+
+      // Log success and optionally show a success message
+      console.log("Save successful:", response.data);
+      // Optional: Add a success notification here
+    } catch (error) {
+      // Log error details for debugging
+      console.error("Save failed:", error);
+
+      // Handle specific error scenarios
+    } finally {
+      // Ensure saving state is reset regardless of success or failure
+      setSaving(false);
+    }
   }
 
   async function handleRemoveMeal() {
@@ -274,16 +291,16 @@ export default function MealItem({ meal, plan, setPlan }: MealItemProps) {
   return (
     <li className="flex flex-col bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg shadow-md space-y-4">
       {/* Meal Header */}
-      <div className="flex items-center justify-between px-4 py-2 text-neutral-700">
+      <div className="flex items-center justify-between px-6 py-2  text-neutral-700">
         <div>
-          <span className="text-base font-semibold">{meal.mealName}</span>
+          <span className="text-xl font-semibold">{meal.mealName}</span>
         </div>
 
         {/* Action Buttons */}
         <div className="flex items-center space-x-4">
           {/* Toggle Table Visibility */}
           <button
-            className="text-blue-700 hover:text-blue-800"
+            className="text-neutral-600 hover:text-neutral-800"
             onClick={() => setIsTableVisible(!isTableVisible)}
           >
             {isTableVisible ? (
@@ -303,40 +320,40 @@ export default function MealItem({ meal, plan, setPlan }: MealItemProps) {
         </div>
       </div>
 
-      {/* Search Bar */}
-      <input
-        onChange={handleSearchChange}
-        type="text"
-        placeholder="Search for a food item..."
-        className="font-semibold text-base border border-neutral-300 rounded-md 
-                           w-full p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-      />
+      {/* Meal Info Table (conditionally rendered) */}
+      {isTableVisible && (
+        <div className="px-6 pb-4">
+          {/* Search Bar */}
+          <input
+            onChange={handleSearchChange}
+            type="text"
+            placeholder="Search for a food item..."
+            className="font-semibold text-base border border-neutral-300 rounded-md 
+                           w-full p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none my-3"
+          />
 
-      {/* Suggestions List */}
-      {searchSuggestions.length > 0 && (
-        <div className="relative">
-          <select
-            onChange={handleSearchSelect}
-            className="absolute w-full mt-1 bg-white border border-gray-300 
+          {/* Suggestions List */}
+          {searchSuggestions.length > 0 && (
+            <div className="relative">
+              <select
+                onChange={handleSearchSelect}
+                className="absolute w-full mt-1 bg-white border border-gray-300 
                                rounded shadow z-50 py-2 px-2 text-sm 
                                focus:outline-none focus:border-blue-400 
                                focus:ring-1 focus:ring-blue-400"
-            size={Math.min(searchSuggestions.length, 5)}
-          >
-            {searchSuggestions.map((food, idx) => (
-              <option key={idx} value={JSON.stringify(food)}>
-                {food.foodName}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
+                size={Math.min(searchSuggestions.length, 5)}
+              >
+                {searchSuggestions.map((food, idx) => (
+                  <option key={idx} value={JSON.stringify(food)}>
+                    {food.foodName}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
-      {/* Meal Info Table (conditionally rendered) */}
-      {isTableVisible && (
-        <div className="px-4 pb-4">
           {/* Table Container */}
-          <div className="overflow-x-auto max-w-3xl rounded-lg shadow">
+          <div className="overflow-x-auto max-w-3xl mx-auto rounded-lg shadow">
             <table className="min-w-full bg-white">
               {/* Table Header */}
               <thead>
@@ -445,7 +462,7 @@ export default function MealItem({ meal, plan, setPlan }: MealItemProps) {
                       <td className=" py-4 whitespace-nowrap text-sm text-center text-gray-700">
                         <button
                           onClick={() => handleRemoveFood(food.id)}
-                          className="text-red-500 hover:text-red-700 transition duration-150 ease-in-out"
+                          className="text-neutral-600 hover:text-neutral-800 transition duration-150 ease-in-out"
                         >
                           <IconTrash size={20} />
                         </button>
@@ -482,9 +499,9 @@ export default function MealItem({ meal, plan, setPlan }: MealItemProps) {
           <div className="flex justify-end mt-4">
             <button
               onClick={handleSave}
-              className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
+              className="bg-gradient-to-br relative group/btn from-zinc-900 to-zinc-900 bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
             >
-              Save
+              {saving ? "saving..." : "save"}
             </button>
           </div>
         </div>

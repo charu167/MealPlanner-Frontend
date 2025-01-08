@@ -65,6 +65,8 @@ export default function MacroCalculator() {
   // STATES
   // =========================
 
+  const [loading, setLoading] = useState(false);
+
   // Local state to store the user's information fetched from the backend.
   const [user, setUser] = useState<User>({
     date_of_birth: "",
@@ -218,12 +220,12 @@ export default function MacroCalculator() {
         carbs: carbsGrams,
       }); // Updating recommended macros
 
-      setGoal((prev) => ({
-        ...prev,
-        protein: proteinGrams,
-        fats: fatsGrams,
-        carbs: carbsGrams,
-      })); // Updating goal with recommended macros
+      // setGoal((prev) => ({
+      //   ...prev,
+      //   protein: proteinGrams,
+      //   fats: fatsGrams,
+      //   carbs: carbsGrams,
+      // })); // Updating goal with recommended macros
     }
   }, [user, adjustedTDEE]);
 
@@ -236,6 +238,7 @@ export default function MacroCalculator() {
    * Sends a PUT request to update the goal in the backend.
    */
   async function handleSubmit() {
+    setLoading(true);
     try {
       const result = await axios.put("http://localhost:3001/goal", goal, {
         headers: {
@@ -246,6 +249,8 @@ export default function MacroCalculator() {
       console.log(result.data); // Logging the response data
     } catch (error) {
       console.log(error); // Logging any errors
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -256,9 +261,17 @@ export default function MacroCalculator() {
   // Conditional rendering based on loading and error states
   if (isLoading)
     return (
-      <p className="bg-black text-white text-center my-auto">Loading...</p>
+      <div className="flex bg-black justify-center items-center h-screen">
+        <p className="text-neutral-200 text-xl font-bold">Loading...</p>
+      </div>
     );
-  if (error) return <p>{error}</p>;
+
+  if (error)
+    return (
+      <div className="flex justify-center bg-black items-center h-screen">
+        <p className="text-red-200">{error}</p>
+      </div>
+    );
 
   return (
     <div className="flex flex-col min-h-screen justify-center items-center bg-black p-6">
@@ -273,7 +286,7 @@ export default function MacroCalculator() {
             <div className="space-y-4">
               {/* BMR Display */}
               <details className="rounded-xl mx-8 my-5 p-5 text-neutral-400 group border border-white/[0.2]">
-                <summary className="text-xl font-medium mb-3 flex items-center cursor-pointer">
+                <summary className="text-base font-semibold mb-3 flex items-center cursor-pointer">
                   <IconChevronRight className="mr-2 w-5 h-5 transition-transform duration-200 ease-in-out group-open:rotate-90" />
                   Metabolic Info
                 </summary>
@@ -302,7 +315,7 @@ export default function MacroCalculator() {
 
               {/* Weight Management */}
               <details className="rounded-xl mx-8 my-5 p-5 text-neutral-400 group border border-white/[0.2]">
-                <summary className="text-xl font-medium mb-4 flex items-center cursor-pointer">
+                <summary className="text-base font-semibold mb-4 flex items-center cursor-pointer">
                   <IconChevronRight className="mr-2 w-5 h-5 transition-transform duration-200 ease-in-out group-open:rotate-90" />
                   Weight Management
                 </summary>
@@ -319,8 +332,8 @@ export default function MacroCalculator() {
                     <span className="mr-2 ">Target weight (kg):</span>
                     <input
                       type="number"
-                      placeholder="Enter target weight"
-                      value={goal.target_weight}
+                      placeholder="60kg"
+                      value={goal.target_weight || ""}
                       onChange={(e) =>
                         setGoal((prev) => ({
                           ...prev,
@@ -335,7 +348,7 @@ export default function MacroCalculator() {
 
               {/* Activity Level */}
               <details className="rounded-xl mx-8 my-5 p-5 text-neutral-400 group border border-white/[0.2]">
-                <summary className="text-xl font-medium mb-4 flex items-center cursor-pointer">
+                <summary className="text-base font-semibold mb-4 flex items-center cursor-pointer">
                   <IconChevronRight className="mr-2 w-5 h-5 transition-transform duration-200 ease-in-out group-open:rotate-90" />
                   Activity Level
                 </summary>
@@ -383,7 +396,7 @@ export default function MacroCalculator() {
 
               {/* Caloric Adjustment */}
               <details className="rounded-xl mx-8 my-5 p-5 text-neutral-400 group border border-white/[0.2]">
-                <summary className="text-xl font-medium mb-4 flex items-center cursor-pointer">
+                <summary className="text-base font-semibold mb-4 flex items-center cursor-pointer">
                   <IconChevronRight className="mr-2 w-5 h-5 transition-transform duration-200 ease-in-out group-open:rotate-90" />
                   Caloric Adjustment
                 </summary>
@@ -439,11 +452,27 @@ export default function MacroCalculator() {
 
               {/* Macronutrients */}
               <details className="rounded-xl mx-8 my-5 p-5 text-neutral-400 group border border-white/[0.2]">
-                <summary className="text-xl font-medium mb-4 flex items-center cursor-pointer">
+                <summary className="text-base font-semibold mb-4 flex items-center cursor-pointer">
                   <IconChevronRight className="mr-2 w-5 h-5 transition-transform duration-200 ease-in-out group-open:rotate-90" />
                   Macro Nutrients
                 </summary>
                 <div className="px-7 text-sm flex flex-col items-start gap-y-6">
+                  {/* Use recomended values button */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setGoal((prev) => ({
+                        ...prev,
+                        protein: recommendedMacros.protein,
+                        fats: recommendedMacros.fats,
+                        carbs: recommendedMacros.carbs,
+                      }));
+                    }}
+                    className="text-sm font-semibold bg-gradient-to-br relative group/btn from-zinc-900 to-zinc-900 bg-zinc-800 w-48 text-neutral-200 rounded-md h-10 shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] hover:from-zinc-900 hover:to-zinc-900 transition duration-200 ease-in-out"
+                  >
+                    Use recommended values
+                  </button>
+
                   {/* Protein Input */}
                   <label className="flex gap-4 items-center">
                     <span className="text-sm text-neutral-400 w-20">
@@ -452,7 +481,7 @@ export default function MacroCalculator() {
                     <input
                       type="number"
                       placeholder="Protein (g)"
-                      value={goal.protein.toFixed(0)}
+                      value={goal.protein.toFixed(0) || ""}
                       onChange={(e) => handleMacronutrientChange(e, "protein")}
                       className=" w-24 border-b border-neutral-400 bg-black text-center text-neutral-200 text-lg font-semibold rounded-none focus:outline-none focus:border-b-2 focus:border-neutral-300 appearance-none"
                     />
@@ -467,7 +496,7 @@ export default function MacroCalculator() {
                     <input
                       type="number"
                       placeholder="Fats (g)"
-                      value={goal.fats.toFixed(0)}
+                      value={goal.fats.toFixed(0) || " "}
                       onChange={(e) => handleMacronutrientChange(e, "fats")}
                       className=" w-24 border-b border-neutral-400 bg-black text-center text-neutral-200 text-lg font-semibold rounded-none focus:outline-none focus:border-b-2 focus:border-neutral-300 appearance-none"
                     />
@@ -484,7 +513,7 @@ export default function MacroCalculator() {
                     <input
                       type="number"
                       placeholder="Carbs (g)"
-                      value={goal.carbs.toFixed(0)}
+                      value={goal.carbs.toFixed(0) || " "}
                       onChange={(e) => handleMacronutrientChange(e, "carbs")}
                       className=" w-24 border-b border-neutral-400 bg-black text-center text-neutral-200 text-lg font-semibold rounded-none focus:outline-none focus:border-b-2 focus:border-neutral-300 appearance-none"
                     />
@@ -514,9 +543,13 @@ export default function MacroCalculator() {
                 <button
                   type="button"
                   onClick={handleSubmit}
-                  className=" bg-gradient-to-br relative group/btn from-zinc-900 to-zinc-900 bg-zinc-800 w-1/2 text-neutral-200 rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] hover:from-zinc-700 hover:to-zinc-700 transition duration-200 ease-in-out"
+                  className=" bg-gradient-to-br relative group/btn from-zinc-900 to-zinc-900 bg-zinc-800 w-1/2 text-neutral-200 rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] hover:from-zinc-900 hover:to-zinc-900 transition duration-200 ease-in-out"
                 >
-                  Save Changes &rarr;
+                  {loading ? (
+                    <span>Saving...</span>
+                  ) : (
+                    <span>Save Changes &rarr;</span>
+                  )}
                   <BottomGradient /> {/* Decorative gradient effect */}
                 </button>
               </div>
