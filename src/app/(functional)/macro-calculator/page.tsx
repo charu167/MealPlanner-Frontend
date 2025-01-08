@@ -5,6 +5,7 @@ import axios from "axios";
 // import useLogin from "../hooks/useLogin";
 import CurrentGoal from "@/components/Helper/CurrentGoal";
 import useLogin from "@/hooks/useLogin";
+import { IconChevronDown, IconChevronRight } from "@tabler/icons-react";
 
 // =========================
 // INTERFACES
@@ -271,29 +272,51 @@ export default function MacroCalculator() {
           <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
             <div className="space-y-4">
               {/* BMR Display */}
-              <details className="mx-8 my-5 p-5 shadow-xl bg-gradient-to-br text-neutral-200 rounded-xl from-neutral-900 to-blackrounded-xl">
-                <summary className="text-xl font-medium mb-3">
+              <details className="rounded-xl mx-8 my-5 p-5 text-neutral-400 group border border-white/[0.2]">
+                <summary className="text-xl font-medium mb-3 flex items-center cursor-pointer">
+                  <IconChevronRight className="mr-2 w-5 h-5 transition-transform duration-200 ease-in-out group-open:rotate-90" />
                   Metabolic Info
                 </summary>
 
-                <p className="text-base">
-                  BMR:{" "}
-                  <span className="font-semibold text-xl">{bmr.toFixed(0)} kcal</span>
+                <p className="text-sm px-7">
+                  <span className="block mb-2">
+                    Your BMR:{" "}
+                    <span className="font-semibold text-xl text-neutral-200">
+                      {bmr.toFixed(0)}
+                    </span>{" "}
+                    kcal
+                  </span>
+
+                  <span className="block mb-2">
+                    <strong>BMR (Basal Metabolic Rate):</strong> The number of
+                    calories your body needs to perform basic life-sustaining
+                    functions while at rest.
+                  </span>
+
+                  <span className="block">
+                    <strong>Basically,</strong> it’s the energy your body burns
+                    to stay alive, even if you do nothing all day.
+                  </span>
                 </p>
               </details>
 
-              {/* Current and Target Weight */}
-              <details className="mx-8 my-5 p-5 shadow-xl bg-gradient-to-br text-neutral-200 rounded-xl from-neutral-900 to-blackrounded-xl">
-                <summary className="text-xl font-bold  mb-3">
+              {/* Weight Management */}
+              <details className="rounded-xl mx-8 my-5 p-5 text-neutral-400 group border border-white/[0.2]">
+                <summary className="text-xl font-medium mb-4 flex items-center cursor-pointer">
+                  <IconChevronRight className="mr-2 w-5 h-5 transition-transform duration-200 ease-in-out group-open:rotate-90" />
                   Weight Management
                 </summary>
-                <div className="flex justify-between items-center">
-                  <p className="text-base ">
-                    Current Weight:
-                    <span className="font-semibold ">{user.weight} kg</span>
+
+                <div className="flex justify-center text-sm items-center px-7 mb-4">
+                  <p className=" flex-1">
+                    Current Weight:{" "}
+                    <span className="text-neutral-200 text-lg font-semibold">
+                      {user.weight}
+                    </span>{" "}
+                    kg
                   </p>
                   <label className="flex items-center">
-                    <span className=" mr-2">Target weight (kg):</span>
+                    <span className="mr-2 ">Target weight (kg):</span>
                     <input
                       type="number"
                       placeholder="Enter target weight"
@@ -304,168 +327,197 @@ export default function MacroCalculator() {
                           target_weight: Number(e.target.value),
                         }))
                       }
-                      className="p-2 w-40 border border-gray-300 bg-black rounded focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                      className=" w-24 border-b border-neutral-400 bg-black text-center text-neutral-200 text-lg font-semibold rounded-none focus:outline-none focus:border-b-2 focus:border-neutral-300 appearance-none"
                     />
                   </label>
                 </div>
-                {/* Activity Level */}
-                <label>
-                  <span className=" mr-2">Activity level:</span>
-                  <select
-                    className="mt-2 p-2 w-full border  bg-black border-b-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value={goal.activity_level}
-                    onChange={handleActivityLevelChange}
-                  >
-                    <option value="1.2">
-                      Sedentary: little or no exercise
-                    </option>
-                    <option value="1.375">Exercise 1-3 times/week</option>
-                    <option value="1.55">Exercise 4-5 times/week</option>
-                    <option value="1.725">
-                      Daily or intense exercise 3-4 times/week
-                    </option>
-                    <option value="1.9">Intense exercise 6-7 times/week</option>
-                    <option value="2.0">
-                      Very intense exercise daily, or physical job
-                    </option>
-                  </select>
-                </label>
+              </details>
+
+              {/* Activity Level */}
+              <details className="rounded-xl mx-8 my-5 p-5 text-neutral-400 group border border-white/[0.2]">
+                <summary className="text-xl font-medium mb-4 flex items-center cursor-pointer">
+                  <IconChevronRight className="mr-2 w-5 h-5 transition-transform duration-200 ease-in-out group-open:rotate-90" />
+                  Activity Level
+                </summary>
+
+                <div className="px-7 text-sm flex flex-col gap-6">
+                  <label className="flex items-center justify-start">
+                    <span>Your activity: </span>
+                    <select
+                      className="text-neutral-200 text-lg font-semibold w-1/2 border-b border-neutral-400 bg-black rounded-none focus:outline-none focus:border-b-2 focus:ring-0 focus:border-neutral-300"
+                      value={goal.activity_level}
+                      onChange={handleActivityLevelChange}
+                    >
+                      <option value="1.2">
+                        Sedentary: little or no exercise
+                      </option>
+                      <option value="1.375">Exercise 1-3 times/week</option>
+                      <option value="1.55">Exercise 4-5 times/week</option>
+                      <option value="1.725">
+                        Daily or intense exercise 3-4 times/week
+                      </option>
+                      <option value="1.9">
+                        Intense exercise 6-7 times/week
+                      </option>
+                      <option value="2.0">
+                        Very intense exercise daily, or physical job
+                      </option>
+                    </select>
+                  </label>
+
+                  <span>
+                    Total Daily Energy Expenditure:{" "}
+                    <span className="text-neutral-200 text-xl font-semibold">
+                      {tdee.toFixed(0)} calories
+                    </span>
+                  </span>
+
+                  <p className="text-neutral-400">
+                    <strong>TDEE (Total Daily Energy Expenditure):</strong> This
+                    is the number of calories your body needs in a day to
+                    maintain your current weight, factoring in your daily
+                    activity level.
+                  </p>
+                </div>
               </details>
 
               {/* Caloric Adjustment */}
-              <details className="mx-8 my-5 p-5 shadow-xl bg-gradient-to-br text-neutral-200 rounded-xl from-neutral-900 to-blackrounded-xl">
-                <summary className="text-xl font-bold mb-3">
+              <details className="rounded-xl mx-8 my-5 p-5 text-neutral-400 group border border-white/[0.2]">
+                <summary className="text-xl font-medium mb-4 flex items-center cursor-pointer">
+                  <IconChevronRight className="mr-2 w-5 h-5 transition-transform duration-200 ease-in-out group-open:rotate-90" />
                   Caloric Adjustment
                 </summary>
 
-                <input
-                  id="caloricAdjustment"
-                  type="range"
-                  min="-1000"
-                  max="1000"
-                  step="100"
-                  value={goal.caloric_adjustment}
-                  onChange={(e) =>
-                    setGoal((prev) => ({
-                      ...prev,
-                      caloric_adjustment: Number(e.target.value),
-                      surplus: Number(e.target.value) >= 0 ? true : false,
-                    }))
-                  }
-                  className="w-full mt-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                  style={{
-                    background:
-                      goal.caloric_adjustment < 0
-                        ? `rgba(255, 76, 76, ${
-                            1 + goal.caloric_adjustment / 1000
-                          })` // More negative, more intense red
-                        : `rgba(76, 175, 80, ${
-                            1 - goal.caloric_adjustment / 1000
-                          })`, // More positive, more intense green
-                  }}
-                />
-                <p className="text-center font-semibold ">
-                  {goal.caloric_adjustment} kcal/day
-                </p>
+                <div className="px-7 text-sm flex flex-col gap-y-7 items-start">
+                  <label className="flex w-full items-center">
+                    <input
+                      id="caloricAdjustment"
+                      type="range"
+                      min="-1000"
+                      max="1000"
+                      step="50"
+                      value={goal.caloric_adjustment}
+                      onChange={(e) =>
+                        setGoal((prev) => ({
+                          ...prev,
+                          caloric_adjustment: Number(e.target.value),
+                          surplus: Number(e.target.value) >= 0,
+                        }))
+                      }
+                      className="w-3/4 mt-1 appearance-none cursor-pointer"
+                    />
 
-                <p className="text-base ">
-                  Adjusted Total Daily Energy Expenditure:{" "}
-                  <span className="font-bold">
-                    {adjustedTDEE.toFixed(2)} kcal
-                  </span>
-                </p>
-                <p className="text-base ">
-                  Weekly Weight Change:
-                  <span
-                    className="font-bold"
-                    style={{
-                      color:
-                        weeklyWeightChangeKg > 0
-                          ? "rgba(255, 76, 76)" // Red for weight gain
-                          : "rgba(76, 175, 80)", // Green for weight loss
-                    }}
-                  >
-                    {weeklyWeightChangeKg.toFixed(2)} kg
-                  </span>
-                </p>
-                <p className="text-base ">
-                  Time to Reach Target:
-                  <span className="font-bold">{displayWeeksToTarget}</span>
-                </p>
+                    <p className="w-1/4 text-center">
+                      <span className="text-neutral-200 text-lg font-semibold">
+                        {goal.caloric_adjustment}
+                      </span>{" "}
+                      kcal/day
+                    </p>
+                  </label>
+
+                  <p className=" ">
+                    You should aim to eat around{" "}
+                    <span className="text-neutral-200 text-xl font-semibold">
+                      {adjustedTDEE.toFixed(0)} calories
+                    </span>{" "}
+                    per day.
+                  </p>
+
+                  <p className=" ">
+                    You will {weeklyWeightChangeKg > 0 ? "gain" : "lose"}{" "}
+                    <span className="font-semibold">
+                      {Math.abs(weeklyWeightChangeKg).toFixed(2)} kg
+                    </span>{" "}
+                    per week, reaching your target in{" "}
+                    <span className="text-neutral-200 text-xl font-semibold">
+                      {displayWeeksToTarget}
+                    </span>
+                    .
+                  </p>
+                </div>
               </details>
 
               {/* Macronutrients */}
-              <details className="mx-8 my-5 p-5 shadow-xl bg-gradient-to-br text-neutral-200 rounded-xl from-neutral-900 to-blackrounded-xl">
-                <summary className="text-xl font-bold mb-3">
-                  Macronutrients
+              <details className="rounded-xl mx-8 my-5 p-5 text-neutral-400 group border border-white/[0.2]">
+                <summary className="text-xl font-medium mb-4 flex items-center cursor-pointer">
+                  <IconChevronRight className="mr-2 w-5 h-5 transition-transform duration-200 ease-in-out group-open:rotate-90" />
+                  Macro Nutrients
                 </summary>
-                <div className="space-y-4">
+                <div className="px-7 text-sm flex flex-col items-start gap-y-6">
                   {/* Protein Input */}
-                  <label className="block text-gray-700 text-base">
-                    Protein (g):
-                    <span className="block font-normal text-gray-600">
-                      Recommended: {recommendedMacros.protein.toFixed(2)}
+                  <label className="flex gap-4 items-center">
+                    <span className="text-sm text-neutral-400 w-20">
+                      Protein:
                     </span>
                     <input
                       type="number"
                       placeholder="Protein (g)"
-                      value={goal.protein.toFixed(2)}
+                      value={goal.protein.toFixed(0)}
                       onChange={(e) => handleMacronutrientChange(e, "protein")}
-                      className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                      className=" w-24 border-b border-neutral-400 bg-black text-center text-neutral-200 text-lg font-semibold rounded-none focus:outline-none focus:border-b-2 focus:border-neutral-300 appearance-none"
                     />
+                    <span className="text-sm text-neutral-400">
+                      (Recommended: {recommendedMacros.protein.toFixed(0)} g)
+                    </span>
                   </label>
 
                   {/* Fats Input */}
-                  <label className="block text-gray-700 text-base">
-                    Fats (g):
-                    <span className="block font-normal text-gray-600">
-                      Recommended: {recommendedMacros.fats.toFixed(2)}
-                    </span>
+                  <label className="flex gap-4 items-center">
+                    <span className="text-sm text-neutral-400 w-20">Fats:</span>
                     <input
                       type="number"
                       placeholder="Fats (g)"
-                      value={goal.fats.toFixed(2)}
+                      value={goal.fats.toFixed(0)}
                       onChange={(e) => handleMacronutrientChange(e, "fats")}
-                      className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                      className=" w-24 border-b border-neutral-400 bg-black text-center text-neutral-200 text-lg font-semibold rounded-none focus:outline-none focus:border-b-2 focus:border-neutral-300 appearance-none"
                     />
+                    <span className="text-sm text-neutral-400">
+                      (Recommended: {recommendedMacros.fats.toFixed(0)} g)
+                    </span>
                   </label>
 
                   {/* Carbs Input */}
-                  <label className="block text-gray-700 text-base">
-                    Carbs (g):
-                    <span className="block font-normal text-gray-600">
-                      Recommended: {recommendedMacros.carbs.toFixed(2)}
+                  <label className="flex gap-4 items-center">
+                    <span className="text-sm text-neutral-400 w-20">
+                      Carbs:
                     </span>
                     <input
                       type="number"
                       placeholder="Carbs (g)"
-                      value={goal.carbs.toFixed(2)}
+                      value={goal.carbs.toFixed(0)}
                       onChange={(e) => handleMacronutrientChange(e, "carbs")}
-                      className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                      className=" w-24 border-b border-neutral-400 bg-black text-center text-neutral-200 text-lg font-semibold rounded-none focus:outline-none focus:border-b-2 focus:border-neutral-300 appearance-none"
                     />
+                    <span className="text-sm text-neutral-400">
+                      (Recommended: {recommendedMacros.carbs.toFixed(0)} g)
+                    </span>
                   </label>
 
                   {/* Calories from Macros */}
-                  <h2 className="text-base font-semibold text-gray-900">
-                    Calories calculated from macros:
-                    <span className="font-bold">
+                  <span className="">
+                    Your total calorie intake based on macros:{" "}
+                    <span className="text-neutral-200 text-xl font-semibold">
                       {(
                         goal.protein * 4 +
                         goal.carbs * 4 +
                         goal.fats * 9
-                      ).toFixed(2)}
-                    </span>
-                  </h2>
+                      ).toFixed(0)}{" "}
+                      kcal
+                    </span>{" "}
+                    (Recommended: {adjustedTDEE.toFixed(0)} kcal)
+                  </span>
                 </div>
               </details>
 
               {/* Submit Button */}
               <div className="col-span-2 text-center mt-6">
                 <button
+                  type="button"
                   onClick={handleSubmit}
-                  className="bg-blue-500 text-white font-bold py-2 px-6 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  className=" bg-gradient-to-br relative group/btn from-zinc-900 to-zinc-900 bg-zinc-800 w-1/2 text-neutral-200 rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] hover:from-zinc-700 hover:to-zinc-700 transition duration-200 ease-in-out"
                 >
-                  Save Changes
+                  Save Changes &rarr;
+                  <BottomGradient /> {/* Decorative gradient effect */}
                 </button>
               </div>
             </div>
@@ -476,3 +528,12 @@ export default function MacroCalculator() {
     </div>
   );
 }
+
+const BottomGradient = () => {
+  return (
+    <>
+      <span className="group-hover/btn:opacity-100 block transition duration-500 opacity-0 absolute h-px w-full -bottom-px inset-x-0 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
+      <span className="group-hover/btn:opacity-100 blur-sm block transition duration-500 opacity-0 absolute h-px w-1/2 mx-auto -bottom-px inset-x-10 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
+    </>
+  );
+};
