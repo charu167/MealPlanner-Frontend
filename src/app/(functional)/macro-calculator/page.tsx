@@ -5,7 +5,7 @@ import axios from "axios";
 // import useLogin from "../hooks/useLogin";
 import CurrentGoal from "@/components/Helper/CurrentGoal";
 import useLogin from "@/hooks/useLogin";
-import { IconChevronDown, IconChevronRight } from "@tabler/icons-react";
+import { IconChevronRight } from "@tabler/icons-react";
 
 // =========================
 // INTERFACES
