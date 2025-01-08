@@ -240,7 +240,7 @@ export default function MacroCalculator() {
   async function handleSubmit() {
     setLoading(true);
     try {
-      const result = await axios.put("http://localhost:3001/goal", goal, {
+      const result = await axios.put(`${process.env.NEXT_PUBLIC_API_BASE_URL}/goal`, goal, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
